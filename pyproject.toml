@@ -8,51 +8,46 @@ dependencies = [
 ]
 
 [dependency-groups]
-lints = [
-    "pre-commit (>=4.6.2,<5.0.0)",
-    "isort (>=8.0.1,<9.0.0)",
-    "flake8 (>=7.3.0,<8.0.0)"
-]
 dev = [
     "pytest (>=9.1.1,<10.0.0)",
     "pytest-asyncio (>=1.4.0,<2.0.0)",
     "faker (>=40.37.0,<41.0.0)",
     "factory-boy (>=3.3.3,<4.0.0)"
 ]
+lints = [
+    "pre-commit (>=4.6.2,<5.0.0)",
+    "ruff (>=0.16.6,<0.17.0)"
+]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-line_length = 120
-lines_after_imports = 2
-lines_between_sections = 1
-lines_between_types = 0
-force_alphabetical_sort_within_sections = true
-ensure_newline_before_comments = true
-combine_as_imports = true
-combine_star = true
-skip_gitignore = true
-balanced_wrapping = true
-force_grid_wrap = 2
-src_paths = ["src"]
-skip_glob = [
-    ".git",
-    ".idea",
-    ".vscode",
-    "venv",
-    ".venv",
+[tool.ruff]
+line-length = 120
+target-version = "py312" # Укажите вашу версию Python
+src = ["src"]
+exclude = [".git", ".idea", ".vscode", "venv", ".venv", "alembic"]
+
+[tool.ruff.lint]
+select = [
+    "F",   # Pyflakes (заменяет autoflake)
+    "E", "W", # pycodestyle (базовый flake8)
+    "I",   # isort
+    "A",   # flake8-builtins
+    "COM", # flake8-commas
+    "T10", # flake8-debugger
+    "C4",  # flake8-comprehensions
+    "ERA", # flake8-eradicate
+    "DUO", # dlint
 ]
-known_aiogram = ["aiogram", "aiogram_dialog"]
-known_first_party = ["src"]
-sections = [
-    "FUTURE",
-    "STDLIB",
-    "AIOGRAM",
-    "THIRDPARTY",
-    "FIRSTPARTY",
-    "LOCALFOLDER",
+ignore = [
+    "COM812",
 ]
+
+[tool.ruff.lint.isort]
+section-order = ["future", "standard-library", "aiogram", "third-party", "first-party", "local-folder"]
+known-first-party = ["src"]
+
+[tool.ruff.lint.isort.sections]
+"aiogram" = ["aiogram", "aiogram_dialog"]
