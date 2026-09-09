@@ -24,7 +24,7 @@ class Couple(BaseEntity):
     )
 
     @classmethod
-    def create_couple(cls, title: str, first_user_oid: str) -> 'Couple':
+    def create_couple(cls, title: str, first_user_oid: str) -> "Couple":
         created_couple = cls(title=title, first_user_oid=first_user_oid)
         created_couple.register_event(
             event=CoupleCreatedEvent(

@@ -198,6 +198,21 @@ pyyaml = ">=5.1"
 virtualenv = ">=20.10.0"
 
 [[package]]
+name = "punq"
+version = "0.9.0"
+description = "An IOC Container for Python 3.10+"
+optional = false
+python-versions = "<4.0,>=3.10"
+groups = ["main"]
+files = [
+    {file = "punq-0.9.0-py3-none-any.whl", hash = "sha256:c8a3cc778776982cab170853c09a8712d98daae77bdd6516740c1360d41dc28c"},
+    {file = "punq-0.9.0.tar.gz", hash = "sha256:85aab7455fac47ce1b099fcb7ea2d8e9f562014672e9d7d46e4cc8e60e19685d"},
+]
+
+[package.dependencies]
+typing-extensions = ">=4.16.0"
+
+[[package]]
 name = "pydantic"
 version = "2.13.4"
 description = "Data validation using Python type hints"
@@ -635,5 +650,5 @@ python-discovery = ">=1.6"
 
 [metadata]
 lock-version = "2.1"
-python-versions = ">=3.12"
-content-hash = "fb4d06ff96ce939015a1fe18f7b223daed7892f7315863e6923503bd47dae45a"
+python-versions = ">=3.12,<4.0"
+content-hash = "4b2bcc2424493730a29768bca98f64f1ec19b36be9924bd10ada4501fbd0f108"

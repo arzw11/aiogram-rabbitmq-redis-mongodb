@@ -13,6 +13,6 @@ def test_create_user(faker: Faker) -> None:
         name=name,
     )
 
-    assert user.telegram_id == telegram_id, f'{user=}'
-    assert user.name == name, f'{user=}'
+    assert user.telegram_id == telegram_id, f"{user=}"
+    assert user.name == name, f"{user=}"
     assert isinstance(user._events[0], UserCreatedEvent)

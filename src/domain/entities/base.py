@@ -28,7 +28,7 @@ class BaseEntity(ABC):
     def __hash__(self) -> int:
         return hash(self.oid)
 
-    def __eq__(self, __value: 'BaseEntity') -> bool:
+    def __eq__(self, __value: "BaseEntity") -> bool:
         return self.oid == __value.oid
 
     def register_event(self, event: BaseEvent) -> None:
