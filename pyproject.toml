@@ -1,5 +1,5 @@
 [project]
-name = "aiogram-mongodb-redis"
+name = "aiogram-rabbitmq-mongodb-redis"
 version = "0.1.0"
 description = ""
 requires-python = ">=3.12,<4.0"

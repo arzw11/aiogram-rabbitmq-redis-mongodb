@@ -1,10 +1,8 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 
 from src.domain.entities.users import User
 
 
-@dataclass
 class BaseUsersRepository(ABC):
     @abstractmethod
     async def create(self, user: User) -> User: ...
