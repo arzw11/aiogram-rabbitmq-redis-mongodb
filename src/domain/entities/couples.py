@@ -14,7 +14,7 @@ from src.domain.exceptions.couples import (
 )
 
 
-@dataclass
+@dataclass(eq=False)
 class Couple(BaseEntity):
     title: str
     first_user_oid: str

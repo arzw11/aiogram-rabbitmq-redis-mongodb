@@ -43,11 +43,12 @@ async def test_couple_repo_get_by_oid_none(faker: Faker, couple_repo: BaseCouple
 
 
 @pytest.mark.asyncio
-async def test_couple_repo_update_by_oid(couple_repo: BaseCouplesRepository):
+async def test_couple_repo_update_by_oid(faker: Faker, couple_repo: BaseCouplesRepository):
     couple: Couple = CoupleEntityFactory.create()
     await couple_repo.create(couple=couple)
 
     copy_couple = copy.deepcopy(couple)
+    copy_couple.title = faker.text(max_nb_chars=64)
 
     result: bool = await couple_repo.update_by_oid(oid=couple.oid, couple=copy_couple)
 

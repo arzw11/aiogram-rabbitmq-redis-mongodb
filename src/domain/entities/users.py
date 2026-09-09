@@ -7,7 +7,7 @@ from src.domain.entities.base import BaseEntity
 from src.domain.events.users import UserCreatedEvent
 
 
-@dataclass
+@dataclass(eq=False)
 class User(BaseEntity):
     telegram_id: int | None = field(
         default=None,

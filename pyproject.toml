@@ -5,7 +5,8 @@ description = ""
 requires-python = ">=3.12,<4.0"
 dependencies = [
     "pydantic-settings (>=2.15.0,<3.0.0)",
-    "punq (>=0.9.0,<0.10.0)"
+    "punq (>=0.9.0,<0.10.0)",
+    "motor (>=3.7.1,<4.0.0)"
 ]
 
 [dependency-groups]
@@ -13,7 +14,8 @@ dev = [
     "pytest (>=9.1.1,<10.0.0)",
     "pytest-asyncio (>=1.4.0,<2.0.0)",
     "faker (>=40.37.0,<41.0.0)",
-    "factory-boy (>=3.3.3,<4.0.0)"
+    "factory-boy (>=3.3.3,<4.0.0)",
+    "mongomock-motor (>=0.0.36,<0.0.37)",
 ]
 lints = [
     "pre-commit (>=4.6.2,<5.0.0)",

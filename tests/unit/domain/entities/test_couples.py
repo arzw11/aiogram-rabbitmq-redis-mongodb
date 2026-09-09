@@ -34,7 +34,7 @@ def test_couple_add_second_user():
     assert isinstance(couple, Couple), f"{couple=}"
     assert couple.first_user_oid == user1.oid, f"{couple=}"
 
-    couple.add_second_user(user2)
+    couple.add_second_user(user2.oid)
 
     assert isinstance(couple._events[0], CoupleFormedEvent), f"{couple=}"
 
