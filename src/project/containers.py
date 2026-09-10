@@ -3,11 +3,17 @@ from functools import lru_cache
 import punq
 from motor.motor_asyncio import AsyncIOMotorClient
 
+from src.domain.commands.users import CreateUserCommand, GetUserByOIDCommand, GetUserByTelegramIDCommand
 from src.infrastructure.repositories.couples.base import BaseCouplesRepository
 from src.infrastructure.repositories.couples.mongo import MongoDBCouplesRepository
 from src.infrastructure.repositories.users.base import BaseUsersRepository
 from src.infrastructure.repositories.users.mongo import MongoDBUsersRepository
 from src.project.configs import settings
+from src.services.handlers.commands.users import (
+    CreateUserCommandHandler,
+    GetUserByOIDCommandHandler,
+    GetUserByTelegramIDCommandHandler,
+)
 from src.services.mediator.base import Mediator
 
 
@@ -52,6 +58,35 @@ def _init_container() -> punq.Container:
     # mediator
     def init_mediator() -> Mediator:
         mediator: Mediator = Mediator()
+
+        # user command handlers
+        mediator.register_command(
+            command=CreateUserCommand,
+            command_handlers=[
+                CreateUserCommandHandler(
+                    _event_mediator=mediator,
+                    users_repository=container.resolve(BaseUsersRepository),
+                ),
+            ],
+        )
+        mediator.register_command(
+            command=GetUserByOIDCommand,
+            command_handlers=[
+                GetUserByOIDCommandHandler(
+                    _event_mediator=mediator,
+                    users_repository=container.resolve(BaseUsersRepository),
+                ),
+            ],
+        )
+        mediator.register_command(
+            command=GetUserByTelegramIDCommand,
+            command_handlers=[
+                GetUserByTelegramIDCommandHandler(
+                    _event_mediator=mediator,
+                    users_repository=container.resolve(BaseUsersRepository),
+                ),
+            ],
+        )
 
         return mediator
 

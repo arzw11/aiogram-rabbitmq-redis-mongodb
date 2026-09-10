@@ -3,6 +3,7 @@ import pytest
 
 from src.infrastructure.repositories.couples.base import BaseCouplesRepository
 from src.infrastructure.repositories.users.base import BaseUsersRepository
+from src.services.mediator.base import Mediator
 from tests.fixtures import init_integration_container
 
 
@@ -19,3 +20,8 @@ def mongo_user_repo(integration_container: punq.Container) -> BaseUsersRepositor
 @pytest.fixture()
 def mongo_couple_repo(integration_container: punq.Container) -> BaseCouplesRepository:
     return integration_container.resolve(BaseCouplesRepository)
+
+
+@pytest.fixture()
+def integration_mediator(integration_container: punq.Container) -> Mediator:
+    return integration_container.resolve(Mediator)
