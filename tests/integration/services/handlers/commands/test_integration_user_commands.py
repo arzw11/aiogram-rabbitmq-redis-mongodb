@@ -31,12 +31,12 @@ async def test_integration_create_user_command_handler(
 
 @pytest.mark.asyncio
 async def test_integration_get_user_by_oid_command_handler(
-    mongo_user_repo: BaseUsersRepository,
+    integration_user_repo: BaseUsersRepository,
     integration_mediator: Mediator,
 ):
     user: User = UserEntityFactory.create()
-    created_user: User = await mongo_user_repo.create(user=user)
-    command: GetUserByOIDCommand = GetUserByOIDCommand(oid=user.oid)
+    created_user: User = await integration_user_repo.create(user=user)
+    command: GetUserByOIDCommand = GetUserByOIDCommand(user_oid=user.oid)
 
     fetched_user, *_ = await integration_mediator.handle_command(command=command)
 
@@ -47,18 +47,18 @@ async def test_integration_get_user_by_oid_command_handler(
 
 @pytest.mark.asyncio
 async def test_integration_get_user_by_oid_command_handler_none(faker: Faker, integration_mediator: Mediator):
-    fetched_user, *_ = await integration_mediator.handle_command(command=GetUserByOIDCommand(oid=faker.pystr()))
+    fetched_user, *_ = await integration_mediator.handle_command(command=GetUserByOIDCommand(user_oid=faker.pystr()))
 
     assert fetched_user is None, f"{fetched_user}"
 
 
 @pytest.mark.asyncio
 async def test_integration_get_user_by_telegram_id_handler(
-    mongo_user_repo: BaseUsersRepository,
+    integration_user_repo: BaseUsersRepository,
     integration_mediator: Mediator,
 ):
     user: User = UserEntityFactory.create()
-    created_user: User = await mongo_user_repo.create(user=user)
+    created_user: User = await integration_user_repo.create(user=user)
     command: GetUserByTelegramIDCommand = GetUserByTelegramIDCommand(telegram_id=created_user.telegram_id)
 
     fetched_user, *_ = await integration_mediator.handle_command(command=command)

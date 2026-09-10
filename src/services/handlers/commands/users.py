@@ -25,7 +25,7 @@ class GetUserByOIDCommandHandler(CommandHandler[GetUserByOIDCommand, User | None
     users_repository: BaseUsersRepository
 
     async def handle(self, command: GetUserByOIDCommand) -> User | None:
-        return await self.users_repository.get_by_oid(oid=command.oid)
+        return await self.users_repository.get_by_oid(oid=command.user_oid)
 
 
 @dataclass(frozen=True)

@@ -3,12 +3,18 @@ from functools import lru_cache
 import punq
 from motor.motor_asyncio import AsyncIOMotorClient
 
+from src.domain.commands.couples import CreateCoupleCommand, FormCoupleCommand, GetCoupleByOIDCommand
 from src.domain.commands.users import CreateUserCommand, GetUserByOIDCommand, GetUserByTelegramIDCommand
 from src.infrastructure.repositories.couples.base import BaseCouplesRepository
 from src.infrastructure.repositories.couples.mongo import MongoDBCouplesRepository
 from src.infrastructure.repositories.users.base import BaseUsersRepository
 from src.infrastructure.repositories.users.mongo import MongoDBUsersRepository
 from src.project.configs import settings
+from src.services.handlers.commands.couples import (
+    CreateCoupleCommandHandler,
+    FormCoupleCommandHandler,
+    GetCoupleByOIDCommandHandler,
+)
 from src.services.handlers.commands.users import (
     CreateUserCommandHandler,
     GetUserByOIDCommandHandler,
@@ -84,6 +90,35 @@ def _init_container() -> punq.Container:
                 GetUserByTelegramIDCommandHandler(
                     _event_mediator=mediator,
                     users_repository=container.resolve(BaseUsersRepository),
+                ),
+            ],
+        )
+
+        # couple command handlers
+        mediator.register_command(
+            command=CreateCoupleCommand,
+            command_handlers=[
+                CreateCoupleCommandHandler(
+                    _event_mediator=mediator,
+                    couples_repository=container.resolve(BaseCouplesRepository),
+                ),
+            ],
+        )
+        mediator.register_command(
+            command=GetCoupleByOIDCommand,
+            command_handlers=[
+                GetCoupleByOIDCommandHandler(
+                    _event_mediator=mediator,
+                    couples_repository=container.resolve(BaseCouplesRepository),
+                ),
+            ],
+        )
+        mediator.register_command(
+            command=FormCoupleCommand,
+            command_handlers=[
+                FormCoupleCommandHandler(
+                    _event_mediator=mediator,
+                    couples_repository=container.resolve(BaseCouplesRepository),
                 ),
             ],
         )

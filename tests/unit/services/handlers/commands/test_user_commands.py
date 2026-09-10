@@ -36,7 +36,7 @@ async def test_get_user_by_oid_command_handler(
 ):
     user: User = UserEntityFactory.create()
     created_user: User = await user_repo.create(user=user)
-    command: GetUserByOIDCommand = GetUserByOIDCommand(oid=user.oid)
+    command: GetUserByOIDCommand = GetUserByOIDCommand(user_oid=user.oid)
 
     fetched_user, *_ = await unit_mediator.handle_command(command=command)
 
@@ -47,7 +47,7 @@ async def test_get_user_by_oid_command_handler(
 
 @pytest.mark.asyncio
 async def test_get_user_by_oid_command_handler_none(faker: Faker, unit_mediator: Mediator):
-    fetched_user, *_ = await unit_mediator.handle_command(command=GetUserByOIDCommand(oid=faker.pystr()))
+    fetched_user, *_ = await unit_mediator.handle_command(command=GetUserByOIDCommand(user_oid=faker.pystr()))
 
     assert fetched_user is None, f"{fetched_user}"
 

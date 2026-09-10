@@ -13,12 +13,12 @@ def integration_container() -> punq.Container:
 
 
 @pytest.fixture()
-def mongo_user_repo(integration_container: punq.Container) -> BaseUsersRepository:
+def integration_user_repo(integration_container: punq.Container) -> BaseUsersRepository:
     return integration_container.resolve(BaseUsersRepository)
 
 
 @pytest.fixture()
-def mongo_couple_repo(integration_container: punq.Container) -> BaseCouplesRepository:
+def integration_couple_repo(integration_container: punq.Container) -> BaseCouplesRepository:
     return integration_container.resolve(BaseCouplesRepository)
 
 

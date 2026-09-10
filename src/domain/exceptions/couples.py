@@ -13,7 +13,7 @@ class CoupleAlreadyHasSecondUserException(ApplicationException):
 
 
 @dataclass(eq=False)
-class CannotAddSameUserToCoupleError(ApplicationException):
+class CannotAddSameUserToCoupleException(ApplicationException):
     couple_oid: str
     first_user_oid: str
     second_user_oid: str

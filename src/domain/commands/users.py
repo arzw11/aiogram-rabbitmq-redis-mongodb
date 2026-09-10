@@ -11,7 +11,7 @@ class CreateUserCommand(BaseCommand):
 
 @dataclass(frozen=True)
 class GetUserByOIDCommand(BaseCommand):
-    oid: str
+    user_oid: str
 
 
 @dataclass(frozen=True)

@@ -9,7 +9,7 @@ from src.domain.events.couples import (
     CoupleFormedEvent,
 )
 from src.domain.exceptions.couples import (
-    CannotAddSameUserToCoupleError,
+    CannotAddSameUserToCoupleException,
     CoupleAlreadyHasSecondUserException,
 )
 
@@ -41,7 +41,7 @@ class Couple(BaseEntity):
             raise CoupleAlreadyHasSecondUserException(self.oid)
 
         if self.first_user_oid == second_user_oid:
-            raise CannotAddSameUserToCoupleError(
+            raise CannotAddSameUserToCoupleException(
                 couple_oid=self.oid,
                 first_user_oid=self.first_user_oid,
                 second_user_oid=second_user_oid,

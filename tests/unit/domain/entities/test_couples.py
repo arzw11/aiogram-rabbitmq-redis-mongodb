@@ -8,7 +8,7 @@ from src.domain.events.couples import (
     CoupleFormedEvent,
 )
 from src.domain.exceptions.couples import (
-    CannotAddSameUserToCoupleError,
+    CannotAddSameUserToCoupleException,
     CoupleAlreadyHasSecondUserException,
 )
 from tests.factories.couples import CoupleEntityFactory
@@ -43,7 +43,7 @@ def test_couple_add_same_user():
     user: User = UserEntityFactory.create()
     couple: Couple = CoupleEntityFactory.create(first_user_oid=user.oid)
 
-    with pytest.raises(CannotAddSameUserToCoupleError):
+    with pytest.raises(CannotAddSameUserToCoupleException):
         couple.add_second_user(second_user_oid=user.oid)
 
 
