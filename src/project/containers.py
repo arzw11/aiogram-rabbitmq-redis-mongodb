@@ -8,6 +8,7 @@ from src.infrastructure.repositories.couples.mongo import MongoDBCouplesReposito
 from src.infrastructure.repositories.users.base import BaseUsersRepository
 from src.infrastructure.repositories.users.mongo import MongoDBUsersRepository
 from src.project.configs import settings
+from src.services.mediator.base import Mediator
 
 
 @lru_cache(1)
@@ -46,6 +47,18 @@ def _init_container() -> punq.Container:
             collection_title=settings.MONGODB_COUPLES_COLLECTION,
         ),
         scope=punq.Scope.singleton,
+    )
+
+    # mediator
+    def init_mediator() -> Mediator:
+        mediator: Mediator = Mediator()
+
+        return mediator
+
+    container.register(
+        service=Mediator,
+        factory=init_mediator,
+        scope=punq.Scope.transient,
     )
 
     return container
