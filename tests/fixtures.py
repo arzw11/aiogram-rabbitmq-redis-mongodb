@@ -2,6 +2,8 @@ import punq
 from mongomock_motor import AsyncMongoMockClient
 from motor.motor_asyncio import AsyncIOMotorClient
 
+from src.infrastructure.message_brokers.base import BaseMessageBroker
+from src.infrastructure.message_brokers.memory import MemoryMessageBroker
 from src.infrastructure.repositories.couples.base import BaseCouplesRepository
 from src.infrastructure.repositories.couples.memory import MemoryCouplesRepository
 from src.infrastructure.repositories.couples.mongo import MongoDBCouplesRepository
@@ -24,6 +26,13 @@ def init_unit_container() -> punq.Container:
     container.register(
         service=BaseCouplesRepository,
         factory=MemoryCouplesRepository,
+        scope=punq.Scope.singleton,
+    )
+
+    # message brokers
+    container.register(
+        service=BaseMessageBroker,
+        instance=MemoryMessageBroker(),
         scope=punq.Scope.singleton,
     )
 
@@ -59,6 +68,13 @@ def init_integration_container() -> punq.Container:
             database_title=settings.MONGODB_COUPLES_DATABASE,
             collection_title=settings.MONGODB_USERS_COLLECTION,
         ),
+        scope=punq.Scope.singleton,
+    )
+
+    # message brokers
+    container.register(
+        service=BaseMessageBroker,
+        instance=MemoryMessageBroker(),
         scope=punq.Scope.singleton,
     )
 

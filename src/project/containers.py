@@ -1,10 +1,13 @@
 from functools import lru_cache
 
 import punq
+from aiormq import Connection, connect
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from src.domain.commands.couples import CreateCoupleCommand, FormCoupleCommand, GetCoupleByOIDCommand
 from src.domain.commands.users import CreateUserCommand, GetUserByOIDCommand, GetUserByTelegramIDCommand
+from src.infrastructure.message_brokers.base import BaseMessageBroker
+from src.infrastructure.message_brokers.rabbitmq import RabbitMessageBroker
 from src.infrastructure.repositories.couples.base import BaseCouplesRepository
 from src.infrastructure.repositories.couples.mongo import MongoDBCouplesRepository
 from src.infrastructure.repositories.users.base import BaseUsersRepository
@@ -58,6 +61,17 @@ def _init_container() -> punq.Container:
             database_title=settings.MONGODB_COUPLES_DATABASE,
             collection_title=settings.MONGODB_COUPLES_COLLECTION,
         ),
+        scope=punq.Scope.singleton,
+    )
+
+    # message brokers
+    async def create_rabbitmq() -> RabbitMessageBroker:
+        connection: Connection = await connect(settings.rabbitmq_uri)
+        return RabbitMessageBroker(connection=connection)
+
+    container.register(
+        service=BaseMessageBroker,
+        factory=create_rabbitmq,
         scope=punq.Scope.singleton,
     )
 
