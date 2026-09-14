@@ -14,7 +14,7 @@ class MemoryMessageBroker(BaseMessageBroker):
     _bindings: dict[str, str] = field(default_factory=dict, kw_only=True)
 
     async def start(self) -> None:
-        self._bindings["users_queue"] = "events.#"
+        self._bindings["users_topic"] = "events.#"
 
     async def close(self) -> None:
         self._messages.clear()
@@ -23,7 +23,7 @@ class MemoryMessageBroker(BaseMessageBroker):
     async def send_message(self, topic: str, key: str, value: bytes) -> None:
         for queue_name, pattern in self._bindings.items():
             if self._match_routing_key(key, pattern):
-                self._messages[queue_name].append({"routing_key": key, "exchange": topic, "body": value})
+                self._messages[queue_name].append({"routing_key": key, "topic": topic, "body": value})
 
     async def start_consuming(self, queue_name: str) -> AsyncIterator[dict]:
         while True:
@@ -31,7 +31,7 @@ class MemoryMessageBroker(BaseMessageBroker):
                 message = self._messages[queue_name].pop(0)
                 yield {
                     "routing_key": message["routing_key"],
-                    "exchange": message["exchange"],
+                    "topic": message["topic"],
                     "body": orjson.loads(message["body"]),
                 }
             else:
