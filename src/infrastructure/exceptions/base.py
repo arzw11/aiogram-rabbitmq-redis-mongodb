@@ -7,4 +7,4 @@ from src.domain.exceptions.base import ApplicationException
 class InfrastructureException(ApplicationException):
     @property
     def message(self) -> str:
-        return "Произошла инфраструктурная ошибка."
+        return 'Произошла инфраструктурная ошибка.'

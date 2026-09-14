@@ -22,21 +22,21 @@ def test_create_couple(faker: Faker):
         first_user_oid=user.oid,
     )
 
-    assert isinstance(couple, Couple), f"{couple=}"
-    assert couple.first_user_oid == user.oid, f"{couple=}"
-    assert isinstance(couple._events[0], CoupleCreatedEvent), f"{couple=}"
+    assert isinstance(couple, Couple), f'{couple=}'
+    assert couple.first_user_oid == user.oid, f'{couple=}'
+    assert isinstance(couple._events[0], CoupleCreatedEvent), f'{couple=}'
 
 
 def test_couple_add_second_user():
     user1, user2 = UserEntityFactory.create_batch(size=2)
     couple: Couple = CoupleEntityFactory.create(first_user_oid=user1.oid)
 
-    assert isinstance(couple, Couple), f"{couple=}"
-    assert couple.first_user_oid == user1.oid, f"{couple=}"
+    assert isinstance(couple, Couple), f'{couple=}'
+    assert couple.first_user_oid == user1.oid, f'{couple=}'
 
     couple.add_second_user(user2.oid)
 
-    assert isinstance(couple._events[0], CoupleFormedEvent), f"{couple=}"
+    assert isinstance(couple._events[0], CoupleFormedEvent), f'{couple=}'
 
 
 def test_couple_add_same_user():

@@ -19,7 +19,7 @@ class MongoDBCouplesRepository(BaseCouplesRepository, BaseMongoDBRepository):
         return couple
 
     async def get_by_oid(self, oid: str) -> Couple | None:
-        couple_document = await self._collection.find_one(filter={"oid": oid})
+        couple_document = await self._collection.find_one(filter={'oid': oid})
 
         if not couple_document:
             return None
@@ -28,11 +28,11 @@ class MongoDBCouplesRepository(BaseCouplesRepository, BaseMongoDBRepository):
 
     async def update_by_oid(self, oid: str, couple: Couple) -> bool:
         couple_document = convert_couple_entity_to_document(couple=couple)
-        couple_document.pop("oid")
+        couple_document.pop('oid')
 
         result = await self._collection.update_one(
-            filter={"oid": oid},
-            update={"$set": couple_document},
+            filter={'oid': oid},
+            update={'$set': couple_document},
         )
 
         return result.modified_count > 0

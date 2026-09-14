@@ -18,6 +18,11 @@ class LoggerSettings(GeneralSettings):
         logging.basicConfig(level=logging.DEBUG)
 
     def config_logger(self):
+        logging.getLogger('pymongo').setLevel(logging.WARNING)
+        logging.getLogger('motor').setLevel(logging.WARNING)
+        logging.getLogger('aio_pika').setLevel(logging.WARNING)
+        logging.getLogger('aiormq').setLevel(logging.WARNING)
+
         if self.ENVIRONMENT == Environment.LOCAL:
             self.config_local_logger()
         else:

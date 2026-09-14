@@ -17,11 +17,11 @@ async def test_integration_create_couple_command_handler(faker: Faker, integrati
     command: CreateCoupleCommand = CreateCoupleCommand(title=title, first_user_oid=first_user_oid)
     created_couple, *_ = await integration_mediator.handle_command(command=command)
 
-    assert isinstance(created_couple, Couple), f"{created_couple=}"
-    assert created_couple.title == title, f"{created_couple=}"
-    assert created_couple.first_user_oid == first_user_oid, f"{created_couple=}"
-    assert len(created_couple._events) > 0, f"{created_couple=}"
-    assert isinstance(created_couple._events[0], CoupleCreatedEvent), f"{created_couple=}"
+    assert isinstance(created_couple, Couple), f'{created_couple=}'
+    assert created_couple.title == title, f'{created_couple=}'
+    assert created_couple.first_user_oid == first_user_oid, f'{created_couple=}'
+    assert len(created_couple._events) > 0, f'{created_couple=}'
+    assert isinstance(created_couple._events[0], CoupleCreatedEvent), f'{created_couple=}'
 
 
 @pytest.mark.asyncio
@@ -35,9 +35,9 @@ async def test_integration_get_couple_by_oid_command_handler(
 
     fetched_couple, *_ = await integration_mediator.handle_command(command=command)
 
-    assert fetched_couple == created_couple, f"{created_couple=}"
-    assert fetched_couple.title == created_couple.title, f"{fetched_couple=}"
-    assert fetched_couple.first_user_oid == created_couple.first_user_oid, f"{fetched_couple=}"
+    assert fetched_couple == created_couple, f'{created_couple=}'
+    assert fetched_couple.title == created_couple.title, f'{fetched_couple=}'
+    assert fetched_couple.first_user_oid == created_couple.first_user_oid, f'{fetched_couple=}'
 
 
 @pytest.mark.asyncio
@@ -46,7 +46,7 @@ async def test_integration_get_couple_by_oid_command_handler_none(faker: Faker, 
         command=GetCoupleByOIDCommand(couple_oid=faker.pystr())
     )
 
-    assert fetched_couple is None, f"{fetched_couple=}"
+    assert fetched_couple is None, f'{fetched_couple=}'
 
 
 @pytest.mark.asyncio
@@ -65,7 +65,7 @@ async def test_integration_form_couple_command_handler(
 
     result, *_ = await integration_mediator.handle_command(command=command)
 
-    assert result is True, f"{result=}"
+    assert result is True, f'{result=}'
 
 
 @pytest.mark.asyncio
@@ -76,7 +76,7 @@ async def test_integration_form_couple_command_handler_none(faker: Faker, integr
     )
     result, *_ = await integration_mediator.handle_command(command=command)
 
-    assert result is False, f"{result=}"
+    assert result is False, f'{result=}'
 
 
 @pytest.mark.asyncio

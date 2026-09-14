@@ -5,8 +5,8 @@ from typing import Any, Generic, TypeVar
 from src.domain.commands.base import BaseCommand
 from src.services.mediator.event import EventMediator
 
-CT = TypeVar("CT", bound=BaseCommand)
-CR = TypeVar("CR", bound=Any)
+CT = TypeVar('CT', bound=BaseCommand)
+CR = TypeVar('CR', bound=Any)
 
 
 @dataclass(frozen=True)

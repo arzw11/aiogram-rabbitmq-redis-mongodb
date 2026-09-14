@@ -23,7 +23,7 @@ class User(BaseEntity):
         cls,
         telegram_id: int | None = None,
         name: str | None = None,
-    ) -> "User":
+    ) -> 'User':
         created_user = cls(telegram_id=telegram_id, name=name)
         created_user.register_event(
             UserCreatedEvent(

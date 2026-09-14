@@ -7,4 +7,4 @@ from src.domain.exceptions.base import ApplicationException
 class ServiceException(ApplicationException):
     @property
     def message(self) -> str:
-        return "Произошла сервисная ошибка."
+        return 'Произошла сервисная ошибка.'

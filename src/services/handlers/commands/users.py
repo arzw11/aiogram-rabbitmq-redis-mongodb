@@ -16,6 +16,7 @@ class CreateUserCommandHandler(CommandHandler[CreateUserCommand, User]):
             name=command.name,
         )
         created_user: User = await self.users_repository.create(user=user)
+        await self._event_mediator.publish(events=created_user.pull_events())
 
         return created_user
 

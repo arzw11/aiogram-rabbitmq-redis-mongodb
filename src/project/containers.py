@@ -1,11 +1,11 @@
 from functools import lru_cache
 
 import punq
-from aiormq import Connection, connect
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from src.domain.commands.couples import CreateCoupleCommand, FormCoupleCommand, GetCoupleByOIDCommand
 from src.domain.commands.users import CreateUserCommand, GetUserByOIDCommand, GetUserByTelegramIDCommand
+from src.domain.events.users import UserCreatedEvent
 from src.infrastructure.message_brokers.base import BaseMessageBroker
 from src.infrastructure.message_brokers.rabbitmq import RabbitMessageBroker
 from src.infrastructure.repositories.couples.base import BaseCouplesRepository
@@ -23,6 +23,7 @@ from src.services.handlers.commands.users import (
     GetUserByOIDCommandHandler,
     GetUserByTelegramIDCommandHandler,
 )
+from src.services.handlers.events.users import UserCreatedEventHandler
 from src.services.mediator.base import Mediator
 
 
@@ -36,7 +37,7 @@ def _init_container() -> punq.Container:
 
     # mongodb
     def create_mongodb_client() -> AsyncIOMotorClient:
-        return AsyncIOMotorClient(settings.MONGO_DB_CONNECTION_URI, serverSelectionTimeoutMS=3000)
+        return AsyncIOMotorClient(settings.mongodb_connection_uri, serverSelectionTimeoutMS=3000)
 
     container.register(
         service=AsyncIOMotorClient,
@@ -48,7 +49,7 @@ def _init_container() -> punq.Container:
     container.register(
         service=BaseUsersRepository,
         factory=lambda: MongoDBUsersRepository(
-            mongo_db_client=container.resolve(AsyncIOMotorClient),
+            mongodb_client=container.resolve(AsyncIOMotorClient),
             database_title=settings.MONGODB_USERS_DATABASE,
             collection_title=settings.MONGODB_USERS_COLLECTION,
         ),
@@ -57,7 +58,7 @@ def _init_container() -> punq.Container:
     container.register(
         service=BaseCouplesRepository,
         factory=lambda: MongoDBCouplesRepository(
-            mongo_db_client=container.resolve(AsyncIOMotorClient),
+            mongodb_client=container.resolve(AsyncIOMotorClient),
             database_title=settings.MONGODB_COUPLES_DATABASE,
             collection_title=settings.MONGODB_COUPLES_COLLECTION,
         ),
@@ -65,13 +66,9 @@ def _init_container() -> punq.Container:
     )
 
     # message brokers
-    async def create_rabbitmq() -> RabbitMessageBroker:
-        connection: Connection = await connect(settings.rabbitmq_uri)
-        return RabbitMessageBroker(connection=connection)
-
     container.register(
         service=BaseMessageBroker,
-        factory=create_rabbitmq,
+        factory=lambda: RabbitMessageBroker(rabbitmq_uri=settings.rabbitmq_uri),
         scope=punq.Scope.singleton,
     )
 
@@ -104,6 +101,17 @@ def _init_container() -> punq.Container:
                 GetUserByTelegramIDCommandHandler(
                     _event_mediator=mediator,
                     users_repository=container.resolve(BaseUsersRepository),
+                ),
+            ],
+        )
+
+        # user event handlers
+        mediator.register_event(
+            event=UserCreatedEvent,
+            event_handlers=[
+                UserCreatedEventHandler(
+                    message_broker=container.resolve(BaseMessageBroker),
+                    broker_topic='users',
                 ),
             ],
         )

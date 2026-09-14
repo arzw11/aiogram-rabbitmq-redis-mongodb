@@ -13,7 +13,7 @@ async def test_couple_repo_create(couple_repo: BaseCouplesRepository):
     couple: Couple = CoupleEntityFactory.create()
     created_couple: Couple = await couple_repo.create(couple)
 
-    assert created_couple == couple, f"{created_couple=}"
+    assert created_couple == couple, f'{created_couple=}'
 
 
 @pytest.mark.asyncio
@@ -22,7 +22,7 @@ async def test_couple_repo_create_batch(faker: Faker, couple_repo: BaseCouplesRe
     couples: list[Couple] = CoupleEntityFactory.create_batch(size=size)
     created_couples: list[Couple] = [await couple_repo.create(couple) for couple in couples]
 
-    assert len(created_couples) == size, f"{created_couples=}"
+    assert len(created_couples) == size, f'{created_couples=}'
 
 
 @pytest.mark.asyncio
@@ -32,14 +32,14 @@ async def test_couple_repo_get_by_oid(couple_repo: BaseCouplesRepository):
 
     fetched_couple: Couple = await couple_repo.get_by_oid(oid=couple.oid)
 
-    assert fetched_couple == couple, f"{fetched_couple=}"
+    assert fetched_couple == couple, f'{fetched_couple=}'
 
 
 @pytest.mark.asyncio
 async def test_couple_repo_get_by_oid_none(faker: Faker, couple_repo: BaseCouplesRepository):
     fetched_couple: None = await couple_repo.get_by_oid(oid=faker.text(max_nb_chars=32))
 
-    assert not fetched_couple, f"{fetched_couple=}"
+    assert not fetched_couple, f'{fetched_couple=}'
 
 
 @pytest.mark.asyncio
@@ -52,7 +52,7 @@ async def test_couple_repo_update_by_oid(faker: Faker, couple_repo: BaseCouplesR
 
     result: bool = await couple_repo.update_by_oid(oid=couple.oid, couple=copy_couple)
 
-    assert result, f"{result=}"
+    assert result, f'{result=}'
 
 
 @pytest.mark.asyncio
@@ -61,4 +61,4 @@ async def test_couple_repo_update_by_oid_false(couple_repo: BaseCouplesRepositor
 
     result: bool = await couple_repo.update_by_oid(oid=couple.oid, couple=couple)
 
-    assert not result, f"{result=}"
+    assert not result, f'{result=}'

@@ -7,4 +7,4 @@ from src.infrastructure.exceptions.base import InfrastructureException
 class ChannelNotInitedException(InfrastructureException):
     @property
     def message(self) -> str:
-        return "Канал не инициализирован."
+        return 'Канал не инициализирован.'

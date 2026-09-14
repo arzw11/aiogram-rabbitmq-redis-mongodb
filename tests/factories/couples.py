@@ -7,7 +7,7 @@ from src.domain.entities.couples import Couple
 
 
 class CoupleEntityFactory(Factory):
-    title = Faker("text", max_nb_chars=64)
+    title = Faker('text', max_nb_chars=64)
     first_user_oid = str(uuid4())
 
     class Meta:

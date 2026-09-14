@@ -9,7 +9,7 @@ class CoupleAlreadyHasSecondUserException(ApplicationException):
 
     @property
     def message(self) -> str:
-        return "Пара уже сформирована."
+        return 'Пара уже сформирована.'
 
 
 @dataclass(eq=False)
@@ -20,4 +20,4 @@ class CannotAddSameUserToCoupleException(ApplicationException):
 
     @property
     def message(self) -> str:
-        return "Пользователь не может формировать пару с самим собой."
+        return 'Пользователь не может формировать пару с самим собой.'

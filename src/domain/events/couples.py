@@ -5,7 +5,7 @@ from src.domain.events.base import BaseEvent
 
 @dataclass
 class CoupleCreatedEvent(BaseEvent):
-    event_title = "Couple created event."
+    event_title = 'Couple created event.'
 
     couple_oid: str
     couple_title: str
@@ -14,7 +14,7 @@ class CoupleCreatedEvent(BaseEvent):
 
 @dataclass
 class CoupleFormedEvent(BaseEvent):
-    event_title = "Couple formed event."
+    event_title = 'Couple formed event.'
 
     couple_oid: str
     couple_title: str

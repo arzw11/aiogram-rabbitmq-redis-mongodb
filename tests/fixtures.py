@@ -55,7 +55,7 @@ def init_integration_container() -> punq.Container:
     container.register(
         service=BaseUsersRepository,
         factory=lambda: MongoDBUsersRepository(
-            mongo_db_client=container.resolve(AsyncIOMotorClient),
+            mongodb_client=container.resolve(AsyncIOMotorClient),
             database_title=settings.MONGODB_USERS_DATABASE,
             collection_title=settings.MONGODB_USERS_COLLECTION,
         ),
@@ -64,7 +64,7 @@ def init_integration_container() -> punq.Container:
     container.register(
         service=BaseCouplesRepository,
         factory=lambda: MongoDBCouplesRepository(
-            mongo_db_client=container.resolve(AsyncIOMotorClient),
+            mongodb_client=container.resolve(AsyncIOMotorClient),
             database_title=settings.MONGODB_COUPLES_DATABASE,
             collection_title=settings.MONGODB_USERS_COLLECTION,
         ),

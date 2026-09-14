@@ -8,4 +8,4 @@ class RabbitMQSettings(BaseSettings):
 
     @property
     def rabbitmq_uri(self) -> str:
-        return f"amqp://{self.RABBITMQ_USER}:{self.RABBITMQ_PASSWORD}@{self.RABBITMQ_HOST}/"
+        return f'amqp://{self.RABBITMQ_USER}:{self.RABBITMQ_PASSWORD}@{self.RABBITMQ_HOST}/'
